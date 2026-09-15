@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="AetherPersonalLauncher.Views.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:AetherPersonalLauncher.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="360" d:DesignWidth="700">
+    <UserControl.DataContext>
+        <local:HomePageViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#44000000">
+            <Grid Style="{StaticResource SideGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding CurrentVersion,StringFormat=当前版本：{0}}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource UniFont}"
+                           FontSize="20"
+                           TextWrapping="Wrap">
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="玩家名称"
+                           Margin="20 0 5 0"
+                           FontSize="18"
+                           FontFamily="{StaticResource UniFont}"/>
+                <TextBox Grid.Row="1" Grid.Column="1"
+                         Height="30" Margin="5 0 20 0"
+                         TextWrapping="NoWrap"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding CurrentUserName}"
+                         FontFamily="{StaticResource UniFont}"
+                         FontSize="18">
+                </TextBox>
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="40" Width="200"
+                        Style="{StaticResource MineCraftButton}"
+                        Content="{Binding Tip}" IsEnabled="{Binding IsStartEnabled}"
+                        FontSize="20" FontFamily="{StaticResource UniFont}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" 
+                        Command="{Binding StartGame}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
