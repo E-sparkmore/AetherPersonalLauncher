@@ -122,6 +122,12 @@ namespace AetherPersonalLauncher.ViewModels
                             case -1:
                                 ShowTip("正在运行");
                                 break;
+                            case -2:
+                                ShowTip("缺少java环境");
+                                break;
+                            case -3:
+                                ShowTip("未知错误");
+                                break;
                             default:
                                 ShowTip("非正常退出");
                                 break;

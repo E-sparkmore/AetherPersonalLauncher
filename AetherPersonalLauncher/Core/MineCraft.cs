@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -22,17 +23,28 @@ namespace AetherPersonalLauncher.Core
         public static int StartMineCraftWaitForExit()
         {
             if (_isRunning) return -1;
-            MineCraftProcess = new Process
+            try
             {
-                StartInfo =  MineCraftProcessInfo
-            };
-            MineCraftProcess.Start();
-            MineCraftStarted?.Invoke(null, null);
-            _isRunning = true;
-            MineCraftProcess.WaitForExit();
-            _isRunning = false;
-            MineCraftExited?.Invoke(null, null);
-            return MineCraftProcess.ExitCode;
+                MineCraftProcess = new Process
+                {
+                    StartInfo = MineCraftProcessInfo
+                };
+                MineCraftProcess.Start();
+                MineCraftStarted?.Invoke(null, null);
+                _isRunning = true;
+                MineCraftProcess.WaitForExit();
+                _isRunning = false;
+                MineCraftExited?.Invoke(null, null);
+                return MineCraftProcess.ExitCode;
+            }
+            catch (Win32Exception)
+            {
+                return -2;
+            }
+            catch (Exception)
+            {
+                return -3;
+            }
         }
 
         public static void StopMineCraft()
@@ -145,6 +157,7 @@ namespace AetherPersonalLauncher.Core
                 sb.Append(components.MinecraftArguments);
                 sb.Append(" ");
             }
+
             var nativesDirectory = Path.Combine(Environment.CurrentDirectory, Downloader.VersionsPath,
                 Config.CurrentVersion, $"{Config.CurrentVersion}-natives");
             sb.Replace("${natives_directory}", nativesDirectory.Replace("\\", "/"));
