@@ -21,7 +21,7 @@ namespace AetherPersonalLauncher.Core
 
         public static int StartMineCraftWaitForExit()
         {
-            if (!_isRunning) return -1;
+            if (_isRunning) return -1;
             MineCraftProcess = new Process
             {
                 StartInfo =  MineCraftProcessInfo
