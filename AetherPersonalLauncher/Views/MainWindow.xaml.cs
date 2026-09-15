@@ -1,5 +1,7 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using AetherPersonalLauncher.Core;
 
 namespace AetherPersonalLauncher.Views
 {
@@ -14,6 +16,18 @@ namespace AetherPersonalLauncher.Views
             Loaded += (s, e) =>
             {
                 ClientArea.Content = new HomePage();
+            };
+            MineCraft.MineCraftStarted += (s, e) =>
+            {
+                Dispatcher.Invoke(Hide);
+            };
+            MineCraft.MineCraftExited += (s, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Show();
+                    Activate();
+                });
             };
         }
 
